@@ -94,7 +94,7 @@ Prérequis : .NET 10 SDK et un terminal (PowerShell).
 
 ---
 
-Si vous voulez que j'ajoute des exemples de requêtes HTTP (GET/POST/PUT/DELETE) pour les entités Ticket/User/Event, je peux les ajouter dans ticket_API.http et dans cette documentation.
+
 
 
 
