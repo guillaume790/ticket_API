@@ -1,17 +1,27 @@
+using Microsoft.EntityFrameworkCore;
+using ticket_API.Data;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+// EF Core + SQLite
+builder.Services.AddDbContext<AppDbContext>(options =>
+options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -19,5 +29,10 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/events", async (AppDbContext db) =>
+{
+    return await db.Events.ToListAsync();
+});
 
 app.Run();
