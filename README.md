@@ -32,6 +32,8 @@ Le README sera mis à jour progressivement dans chaque branche pour refléter l�
 
 ---
 
+## 📁 Structure du projet 
+
 
 
 
