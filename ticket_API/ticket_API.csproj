@@ -16,4 +16,12 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Data\" />
+    <Folder Include="Endpoints\" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
