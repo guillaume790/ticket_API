@@ -11,9 +11,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
+
+
+// Swagger
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -76,15 +82,21 @@ app.MapDelete("/events/{id}", async (AppDbContext db, int id) =>
 
 app.MapGet("/tickets", async (AppDbContext db) =>
 {
-    return await db.Tickets.ToListAsync();
+    return await db.Tickets
+        .Include(t => t.User)
+        .Include(t => t.Event)
+        .ToListAsync();
 });
+
 
 app.MapGet("/tickets/{id}", async (int id, AppDbContext db) =>
 {
-    return await db.Tickets.FindAsync(id)
-        is Ticket ticket
-        ? Results.Ok(ticket)
-        : Results.NotFound();
+    var ticket = await db.Tickets
+        .Include(t => t.Event)
+        .Include(t => t.User)
+        .FirstOrDefaultAsync(t => t.Id == id);
+
+    return ticket is not null ? Results.Ok(ticket) : Results.NotFound();
 });
 
 app.MapPost("/tickets", async (Ticket ticket, AppDbContext db) =>
@@ -125,7 +137,9 @@ app.MapGet("/users", async (AppDbContext db) =>
 
 app.MapGet("/users/{id}", async (int id, AppDbContext db) =>
 {
-    return await db.Users.FindAsync(id)
+    return await db.Users
+        .Include(u => u.Tickets)
+        .FirstOrDefaultAsync(u => u.Id == id)
         is User user
         ? Results.Ok(user)
         : Results.NotFound();
@@ -160,7 +174,5 @@ app.MapDelete("/users/{id}", async (int id, AppDbContext db) =>
     await db.SaveChangesAsync();
     return Results.NoContent();
 });
-
-
 
 app.Run();
