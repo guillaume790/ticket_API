@@ -90,11 +90,42 @@ Prérequis : .NET 10 SDK et un terminal (PowerShell).
 
 ## 🔌 Endpoints principaux
 
--- GET /events
+🎫 Events
+GET /events
+Liste tous les événements.
+
+GET /events/{id}
+Récupère un événement par ID.
+
+POST /events
+Crée un événement.
+
+PUT /events/{id}
+Modifie un événement.
+
+DELETE /events/{id}
+Supprime un événement.
 
 ---
 
+## 🎟 Tickets
 
+### GET /tickets
+Liste tous les tickets.
 
+### GET /tickets/{id}
+Récupère un ticket par ID.
+
+### POST /tickets
+Crée un ticket.
+
+### PUT /tickets/{id}
+Modifie un ticket.
+
+### DELETE /tickets/{id}
+Supprime un ticket.
+
+Les tickets sont liés à un événement via EventId.
+La relation Event → Tickets est gérée par Entity Framework Core.
 
 

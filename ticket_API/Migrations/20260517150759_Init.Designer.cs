@@ -11,8 +11,8 @@ using ticket_API.Data;
 namespace ticket_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260514164625_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260517150759_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,7 +65,7 @@ namespace ticket_API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -103,11 +103,13 @@ namespace ticket_API.Migrations
 
             modelBuilder.Entity("ticket_API.Models.Ticket", b =>
                 {
-                    b.HasOne("ticket_API.Models.Event", null)
+                    b.HasOne("ticket_API.Models.Event", "Event")
                         .WithMany("Tickets")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("ticket_API.Models.Event", b =>

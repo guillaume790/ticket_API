@@ -62,7 +62,7 @@ namespace ticket_API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -100,11 +100,13 @@ namespace ticket_API.Migrations
 
             modelBuilder.Entity("ticket_API.Models.Ticket", b =>
                 {
-                    b.HasOne("ticket_API.Models.Event", null)
+                    b.HasOne("ticket_API.Models.Event", "Event")
                         .WithMany("Tickets")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("ticket_API.Models.Event", b =>
