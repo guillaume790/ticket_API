@@ -128,4 +128,22 @@ Supprime un ticket.
 Les tickets sont liés à un événement via EventId.
 La relation Event → Tickets est gérée par Entity Framework Core.
 
+---
+
+👤 Users
+
+GET /users
+Retourne la liste de tous les utilisateurs.
+
+GET /users/{id}
+Retourne un utilisateur spécifique via son ID.
+
+POST /users
+Crée un nouvel utilisateur.
+
+PUT /users/{id}
+Modifie un utilisateur existant.
+
+DELETE /users/{id}
+Supprime un utilisateur.
 
