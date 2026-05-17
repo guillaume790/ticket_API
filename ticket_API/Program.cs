@@ -73,4 +73,51 @@ app.MapDelete("/events/{id}", async (AppDbContext db, int id) =>
     return Results.NoContent();
 });
 
+
+app.MapGet("/tickets", async (AppDbContext db) =>
+{
+    return await db.Tickets.ToListAsync();
+});
+
+app.MapGet("/tickets/{id}", async (int id, AppDbContext db) =>
+{
+    return await db.Tickets.FindAsync(id)
+        is Ticket ticket
+        ? Results.Ok(ticket)
+        : Results.NotFound();
+});
+
+app.MapPost("/tickets", async (Ticket ticket, AppDbContext db) =>
+{
+    db.Tickets.Add(ticket);
+    await db.SaveChangesAsync();
+    return Results.Created($"/tickets/{ticket.Id}", ticket);
+});
+
+app.MapPut("/tickets/{id}", async (int id, Ticket input, AppDbContext db) =>
+{
+    var ticket = await db.Tickets.FindAsync(id);
+    if (ticket is null) return Results.NotFound();
+
+    ticket.Title = input.Title;
+    ticket.Description = input.Description;
+    ticket.Price = input.Price;
+    ticket.EventId = input.EventId;
+
+    await db.SaveChangesAsync();
+    return Results.Ok(ticket);
+});
+
+app.MapDelete("/tickets/{id}", async (int id, AppDbContext db) =>
+{
+    var ticket = await db.Tickets.FindAsync(id);
+    if (ticket is null) return Results.NotFound();
+
+    db.Tickets.Remove(ticket);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+
+
+
 app.Run();
