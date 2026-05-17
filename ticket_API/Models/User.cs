@@ -13,5 +13,8 @@
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public List<Ticket> Tickets { get; set; } = new();
+
+        public string PasswordHash { get; set; } = string.Empty;
+
     }
 }
