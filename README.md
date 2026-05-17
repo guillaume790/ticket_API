@@ -147,3 +147,24 @@ Modifie un utilisateur existant.
 DELETE /users/{id}
 Supprime un utilisateur.
 
+---
+
+🔐 Authentification JWT
+L’API utilise un système d’authentification basé sur JSON Web Tokens (JWT).
+
+📝 Register
+POST /auth/register
+
+🔑 Login
+POST /auth/login
+
+
+🔗 Relations
+Un User possède plusieurs Tickets
+
+Un Ticket appartient à un User
+
+Un Ticket appartient à un Event
+
+Un Event possède plusieurs Tickets
+
