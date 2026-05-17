@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ticket_API.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,12 +64,22 @@ namespace ticket_API.Migrations
                         principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_EventId",
                 table: "Tickets",
                 column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_UserId",
+                table: "Tickets",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -79,10 +89,10 @@ namespace ticket_API.Migrations
                 name: "Tickets");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Events");
 
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "Users");
         }
     }
 }

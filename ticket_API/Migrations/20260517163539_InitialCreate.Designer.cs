@@ -11,8 +11,8 @@ using ticket_API.Data;
 namespace ticket_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260517154957_AddUsers")]
-    partial class AddUsers
+    [Migration("20260517163539_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
